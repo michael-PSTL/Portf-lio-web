@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+.timeline-section {
+  background: #030611;
+  min-height: 100vh;
+  padding: 100px 24px;
+  font-family: "Sora", sans-serif;
+}
+
+.timeline-header {
+  max-width: 900px;
+  margin: auto;
+  margin-bottom: 70px;
+}
+
+.timeline-header span {
+  color: #5c8dff;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: "Space Mono", monospace;
+}
+
+.timeline-header h2 {
+  color: white;
+  margin-top: 10px;
+  font-size: 1.8rem;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+}
+
+.timeline-list {
+  position: relative;
+  list-style: none;
+  padding: 0;
+  margin: auto;
+  max-width: 900px;
+}
+
+.timeline-list::before {
+  content: "";
+
+  position: absolute;
+
+  left: 19px;
+  top: 0;
+  bottom: 0;
+
+  width: 2px;
+
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.timeline-item {
+  position: relative;
+
+  padding-left: 70px;
+  padding-bottom: 55px;
+
+  opacity: 0;
+  transform: translateY(35px);
+
+  transition: 0.7s;
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-dot {
+  position: absolute;
+
+  left: 12px;
+  top: 28px;
+
+  width: 16px;
+  height: 16px;
+
+  border-radius: 50%;
+
+  background: #5c8dff;
+
+  border: 4px solid #050816;
+}
+
+.timeline-card {
+  background: rgba(255, 255, 255, 0.03);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 18px;
+
+  padding: 26px;
+
+  transition: 0.3s;
+}
+
+.timeline-card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(92, 141, 255, 0.4);
+
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.timeline-date {
+  display: inline-block;
+
+  margin-bottom: 12px;
+
+  color: #7aa4ff;
+
+  font-size: 0.75rem;
+
+  font-family: "Space Mono", monospace;
+
+  letter-spacing: 0.12em;
+}
+
+.timeline-card h3 {
+  margin: 0 0 12px;
+
+  color: white;
+
+  font-size: 1.15rem;
+
+  font-weight: 600;
+}
+
+.timeline-card p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  line-height: 1.8;
+
+  font-size: 0.95rem;
+}
+
+@media (max-width: 700px) {
+  .timeline-section {
+    padding: 70px 18px;
+  }
+
+  .timeline-header h2 {
+    font-size: 1.9rem;
+  }
+
+  .timeline-item {
+    padding-left: 55px;
+  }
+
+  .timeline-list::before {
+    left: 14px;
+  }
+
+  .timeline-dot {
+    left: 7px;
+  }
+
+  .timeline-card {
+    padding: 20px;
+  }
+}

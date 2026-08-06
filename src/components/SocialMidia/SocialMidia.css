@@ -1,0 +1,166 @@
+/* ==========================================================================
+   SOCIAL MEDIA — Compatível com o hero redesign
+   ========================================================================== */
+
+.socials {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.social-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 0 13px;
+  cursor: pointer;
+
+  width: 62px;
+  height: 62px;
+
+  opacity: 0.7;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  transition:
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.25s ease,
+    opacity 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.35s ease;
+}
+
+.social-item:hover {
+  opacity: 1;
+}
+
+.social-item .icon {
+  width: 35px;
+  height: 35px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.social-label {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-left: 10px;
+  opacity: 0;
+  transition: opacity 0.15s ease 0.15s;
+}
+
+.social-item:hover .social-label {
+  opacity: 1;
+}
+
+/* ── Cores individuais — fundo sutil + glow no hover ── */
+
+.github {
+  background-color: rgba(22, 26, 78, 0.6);
+}
+.github:hover {
+  width: 128px;
+  background-color: rgba(22, 26, 78, 0.9);
+  border-color: rgba(79, 142, 247, 0.2);
+  box-shadow: 0 0 18px 2px rgba(79, 142, 247, 0.12);
+}
+
+.linkedin {
+  background-color: rgba(19, 143, 209, 0.25);
+}
+.linkedin:hover {
+  width: 136px;
+  background-color: rgba(19, 143, 209, 0.4);
+  border-color: rgba(19, 143, 209, 0.3);
+  box-shadow: 0 0 18px 2px rgba(19, 143, 209, 0.15);
+}
+
+.email {
+  background-color: rgba(234, 67, 53, 0.2);
+}
+.email:hover {
+  width: 112px;
+  background-color: rgba(234, 67, 53, 0.35);
+  border-color: rgba(234, 67, 53, 0.3);
+  box-shadow: 0 0 18px 2px rgba(234, 67, 53, 0.12);
+}
+
+.instagram {
+  background-color: rgba(228, 64, 95, 0.2);
+}
+.instagram:hover {
+  width: 152px;
+  background-color: rgba(228, 64, 95, 0.35);
+  border-color: rgba(228, 64, 95, 0.3);
+  box-shadow: 0 0 18px 2px rgba(228, 64, 95, 0.12);
+}
+
+.tiktok {
+  background-color: rgba(47, 17, 155, 0.35);
+}
+.tiktok:hover {
+  width: 122px;
+  background-color: rgba(47, 17, 155, 0.55);
+  border-color: rgba(107, 99, 255, 0.25);
+  box-shadow: 0 0 18px 2px rgba(107, 99, 255, 0.12);
+}
+
+.whatsapp {
+  background-color: rgba(37, 211, 102, 0.12);
+}
+.whatsapp:hover {
+  width: 148px;
+  background-color: rgba(37, 211, 102, 0.22);
+  border-color: rgba(37, 211, 102, 0.25);
+  box-shadow: 0 0 18px 2px rgba(37, 211, 102, 0.1);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .social-item {
+    width: 45px;
+    height: 45px;
+  }
+
+  .social-item .icon {
+    width: 25px;
+    height: 25px;
+  }
+  .social-item:hover {
+    width: 45px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .socials {
+    gap: 6px;
+  }
+
+  .social-item {
+    width: 45px;
+    height: 45px;
+    padding: 0 10px;
+  }
+
+  .social-item:hover {
+    width: 45px !important;
+  }
+
+  .social-label {
+    display: none !important;
+  }
+}
