@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -434,3 +433,12 @@
     font-size: 10px;
   }
 }
+
+/* Featured projects use the same podium classes as the existing design. */
+.podio-card { min-width: 0; color: inherit; text-align: center; }
+.project-name { margin-top: 18px; overflow-wrap: anywhere; }
+.project-state { margin-top: 10px; font-size: 11px; color: #b5a9c6; }
+.projeto-info { min-width: 0; }
+.projeto-desc { overflow-wrap: anywhere; }
+.projects a:focus-visible, .ver-mais:focus-visible { outline: 2px solid #b095ff; outline-offset: 4px; }
+.projects div.podio-card, .projects div.projeto-item { cursor: default; }

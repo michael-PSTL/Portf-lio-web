@@ -44,3 +44,17 @@ a{
   border-radius: 999px;
   border: 2px solid #08142e;
 }
+:focus-visible { outline: 2px solid #7dd3fc; outline-offset: 5px; }
+button { font: inherit; }
+section { scroll-margin-top: 76px; }
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 1000; padding: 12px; background: #0f172a; color: #fff; transform: translateY(-150%); }
+.skip-link:focus { transform: translateY(0); }
+.data-message { color: #cbd5e1; padding: 16px; line-height: 1.6; }
+.hero > *, .skills-col, .projeto-info { min-width: 0; }
+.projeto-desc, .item-text { overflow-wrap: anywhere; }
+@media (max-width: 768px) {
+  .projects, .skills, .timeline-section { min-height: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

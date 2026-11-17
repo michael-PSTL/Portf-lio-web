@@ -8,7 +8,7 @@ const events = [
     text: "Conheci a programação depois de pesquisas sobre Excel, pois eu fazia um curso avançado. Vi o nome Python e decidi mergulhar de vez no mundo do desenvolvimento.",
   },
   {
-    date: "022 · 9 · 2025",
+    date: "22 · 09 · 2025",
     title: "Estruturando a base",
     text: "Aprendi oque é um back-end front-end, conheci o professor gustavo guanabara e decidi começar pelo front-end, estudando html, css e um pouco de javascript.",
   },
@@ -28,6 +28,10 @@ function TimelineItem({ date, title, text }) {
   const ref = useRef(null);
 
   useEffect(() => {
+    if (!('IntersectionObserver' in window)) {
+      ref.current.classList.add('visible');
+      return;
+    }
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

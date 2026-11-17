@@ -1,30 +1,9 @@
-import { useEffect, useState } from "react";
+import { usePortfolio } from "../../data/usePortfolio.js";
 import "./SocialMidia.css";
 
 function SocialMidia() {
-  const [links, setLinks] = useState([]);
-
-  useEffect(() => {
-    async function loadLinks() {
-      try {
-        const res = await fetch(
-          "https://curriculo-api-qirm.onrender.com/sociallinks"
-        );
-        const data = await res.json();
-
-        const urls = data
-         .map((item) => item.url)
-         .filter((url) => !url.includes("google.com/maps"));
-         
-        setLinks(urls);
-
-      } catch (err) {
-        console.error("Erro ao buscar social links:", err);
-      }
-    }
-
-    loadLinks();
-  }, []);
+  const { socialLinks } = usePortfolio();
+  const links = socialLinks.map((item) => item.url).filter((url) => !url.includes("google.com/maps"));
 
   const getIcon = (url) => {
     if (url.includes("github")) return "#github";
@@ -33,7 +12,7 @@ function SocialMidia() {
     if (url.includes("tiktok")) return "#tiktok";
     if (url.includes("wa.me") || url.includes("whatsapp")) return "#whatsapp";
     if (url.startsWith("mailto:")) return "#email";
-    return "#link";
+    return "#site";
   };
 
   const getClass = (url) => {
@@ -58,16 +37,16 @@ function SocialMidia() {
 
   return (
     <div className="socials">
-      {links.map((url, index) => (
+      {links.map((url) => (
         <a
-          key={index}
+          key={url}
           className={`social-item ${getClass(url)}`}
           href={url}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
-          <svg className="icon">
-            <use href={`/${getIcon(url)}`} />
+          <svg className="icon" aria-hidden="true">
+            <use href={getIcon(url)} />
           </svg>
           <span className="social-label">{getLabel(url)}</span>
         </a>
