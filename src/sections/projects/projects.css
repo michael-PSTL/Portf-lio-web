@@ -108,34 +108,34 @@
 }
 
 /* #2 Lugar — prata */
-.podio-primeiro-lugar {
+.podio-segundo-lugar {
   height: 82%;
   background: linear-gradient(175deg, rgba(180, 180, 195, 0.12) 0%, rgba(60, 60, 75, 0.18) 100%);
   border: 1px solid rgba(180, 180, 210, 0.14);
   order: 1;
 }
 
-.podio-primeiro-lugar::before {
+.podio-segundo-lugar::before {
   background: linear-gradient(90deg, transparent, rgba(180, 180, 210, 0.5), transparent);
 }
 
-.podio-primeiro-lugar:hover {
+.podio-segundo-lugar:hover {
   box-shadow: 0 0 40px rgba(160, 160, 200, 0.12);
 }
 
 /* #1 Lugar — ouro */
-.podio-segundo-lugar {
+.podio-primeiro-lugar {
   height: 100%;
   background: linear-gradient(175deg, rgba(255, 210, 50, 0.13) 0%, rgba(120, 80, 0, 0.18) 100%);
   border: 1px solid rgba(255, 210, 50, 0.18);
   order: 2;
 }
 
-.podio-segundo-lugar::before {
+.podio-primeiro-lugar::before {
   background: linear-gradient(90deg, transparent, rgba(255, 210, 80, 0.6), transparent);
 }
 
-.podio-segundo-lugar:hover {
+.podio-primeiro-lugar:hover {
   box-shadow: 0 0 50px rgba(255, 200, 40, 0.14);
 }
 
@@ -167,6 +167,7 @@
   align-items: center;
   justify-content: center;
   font-family: 'Space Mono', monospace;
+  color: #29444bee;
   font-size: 13px;
   font-weight: 700;
   margin-bottom: 12px;
@@ -205,11 +206,11 @@
   line-height: 1.4;
 }
 
-.podio-segundo-lugar .project-name {
+.podio-primeiro-lugar .project-name {
   color: rgba(255, 210, 80, 0.7);
 }
 
-.podio-primeiro-lugar .project-name {
+.podio-segundo-lugar .project-name {
   color: rgba(180, 180, 210, 0.65);
 }
 
@@ -236,11 +237,11 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-.podio-segundo-lugar .card-dots span {
+.podio-primeiro-lugar .card-dots span {
   background: rgba(255, 200, 40, 0.2);
 }
 
-.podio-primeiro-lugar .card-dots span {
+.podio-segundo-lugar .card-dots span {
   background: rgba(180, 180, 210, 0.18);
 }
 
@@ -335,7 +336,7 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  color: rgba(220, 217, 228, 0.5);
+  flex-shrink: 0;
 }
 
 /* ==========================================
@@ -419,7 +420,10 @@
 
   .project-name {
     font-size: 10px;
+    letter-spacing: 0.02em;
   }
+
+  .podio-card { padding-inline: 8px; }
 
   .projeto-item {
     padding: 11px 12px;
@@ -436,6 +440,7 @@
 
 /* Featured projects use the same podium classes as the existing design. */
 .podio-card { min-width: 0; color: inherit; text-align: center; }
+.podio-card:only-child { flex: 0 1 260px; }
 .project-name { margin-top: 18px; overflow-wrap: anywhere; }
 .project-state { margin-top: 10px; font-size: 11px; color: #b5a9c6; }
 .projeto-info { min-width: 0; }

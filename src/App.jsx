@@ -4,6 +4,7 @@ import Projects from './sections/projects/projects.jsx'
 import Skills from './sections/skills/skills.jsx'
 import Timeline from './sections/timeline/timeline.jsx'
 import Footer from './components/footer/footer.jsx'
+import ConnectionNotice from './components/ConnectionNotice/ConnectionNotice.jsx'
 
 import SvgSprite from './assets/svg/SvgSprite.jsx'
 import { PortfolioProvider } from './data/PortfolioProvider.jsx'
@@ -16,6 +17,7 @@ function App() {
 
       <Header />
       <main id="main-content" tabIndex={-1}>
+        <ConnectionNotice />
         <Hero />
         <Projects />
         <Skills />

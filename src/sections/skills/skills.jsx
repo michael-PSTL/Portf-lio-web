@@ -47,7 +47,7 @@ function TechChip({ icon, name, learning = false }) {
 }
 
 function Skills() {
-  const { technologies: allTechnologies, error } = usePortfolio();
+  const { technologies: allTechnologies } = usePortfolio();
   const technologies = allTechnologies.filter(
     (tech) => !["VsCode", "Intellij", "PyCharm"].includes(tech.icon),
   );
@@ -61,7 +61,6 @@ function Skills() {
         <h2>Skills</h2>
       </div>
 
-      {error && <p className="data-notice" role="status">Algumas informações não puderam ser atualizadas.</p>}
       <div className="skills-col-wrap">
         <div className="skills-col">
           <h3>Tecnologias dominadas</h3>

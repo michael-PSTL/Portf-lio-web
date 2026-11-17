@@ -50,6 +50,9 @@ section { scroll-margin-top: 76px; }
 .skip-link { position: fixed; top: 8px; left: 8px; z-index: 1000; padding: 12px; background: #0f172a; color: #fff; transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
 .data-message { color: #cbd5e1; padding: 16px; line-height: 1.6; }
+.project-status-site { color: #7ed8b5; }
+.project-status-repo { color: #b4bff2; }
+.project-status-build { color: #dfb77e; }
 .hero > *, .skills-col, .projeto-info { min-width: 0; }
 .projeto-desc, .item-text { overflow-wrap: anywhere; }
 @media (max-width: 768px) {

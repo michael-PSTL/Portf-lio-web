@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef } from 'react';
 import './AnimatedList.css';
+import { PROJECT_STATUSES } from '../../data/projects.js';
 
 export default function AnimatedList({ items = [], onClose }) {
   const dialogRef = useRef(null);
@@ -47,12 +48,20 @@ export default function AnimatedList({ items = [], onClose }) {
             <path d="m18 6-12 12M6 6l12 12" />
           </svg>
         </button>
+        <ul className="project-legend" aria-label="Status dos projetos">
+          {PROJECT_STATUSES.map(({ icon, label }) => (
+            <li key={icon} className={`project-status-${icon}`}>
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href={`#${icon}`} /></svg>
+              <span>{label}</span>
+            </li>
+          ))}
+        </ul>
         <ul className="scroll-list">
           {items.map((item) => {
             const content = <>
               {item.num && <span className="item-num">{item.num}</span>}
               <div className="item-info"><p className="item-title">{item.title}</p>{item.desc && <p className="item-text">{item.desc}</p>}</div>
-              {item.tag && <span className="item-tag" aria-hidden="true"><svg viewBox="0 0 20 20" width="30" height="30"><use href={`#${item.tag}`} /></svg></span>}
+              {item.tag && <span className={`item-tag project-status-${item.tag}`} role="img" aria-label={item.status} title={item.status}><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><use href={`#${item.tag}`} /></svg></span>}
             </>;
             return <li key={item.id}>
               {item.link ? <a href={item.link} target="_blank" rel="noopener noreferrer" className="item">{content}</a> : <div className="item">{content}</div>}

@@ -20,10 +20,13 @@ html:has(dialog[open]) { overflow: hidden; }
 }
 
 .modal-content { position: relative; }
-.modal-heading { padding: 24px 60px 20px 20px; font-size: 18px; }
+.modal-heading { padding: 24px 60px 16px 24px; font-size: 18px; }
+.project-legend { display: flex; flex-wrap: wrap; gap: 12px 18px; margin: 0 24px 18px; padding-bottom: 18px; border-bottom: 1px solid #ffffff12; list-style: none; }
+.project-legend li { display: flex; align-items: center; gap: 7px; font-size: 10px; }
+.project-legend svg { flex-shrink: 0; }
 .scroll-list {
   list-style: none;
-  max-height: min(400px, calc(100dvh - 130px));
+  max-height: min(400px, calc(100dvh - 240px));
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 0 16px 16px;
@@ -59,7 +62,7 @@ html:has(dialog[open]) { overflow: hidden; }
 .item-info { min-width: 0; flex: 1; }
 .item-title { font-size: 14px; font-weight: 600; }
 .item-text { margin-top: 4px; font-size: 12px; color: #a096b0; overflow-wrap: anywhere; }
-.item-tag { display: flex; color: #a096b0; flex-shrink: 0; }
+.item-tag { display: flex; padding: 9px; border: 1px solid currentColor; border-radius: 10px; flex-shrink: 0; }
 .close-button:focus-visible, .scroll-list a.item:focus-visible { outline: 2px solid #b095ff; outline-offset: 2px; }
 @keyframes project-appear { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .scroll-list .item { animation: none; } }

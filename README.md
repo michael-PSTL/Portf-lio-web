@@ -21,7 +21,7 @@ O build gera a pasta `dist`. Envie **o conteúdo dessa pasta** ao provedor. Não
 
 Copie `.env.example` para `.env` se desejar personalizar a API. `VITE_API_BASE_URL` define a URL pública do backend; sem a variável, o site usa a API Render original. Defina `VITE_API_BASE_URL=` para usar apenas os dados locais de `src/data/fallback.js`.
 
-As chamadas validam HTTP, JSON e formato dos dados, possuem timeout de 12 segundos e são canceladas na desmontagem. Cada recurso usa dados locais quando falha, sem derrubar a página. Traduções são compartilhadas entre componentes. Atualize `fallback.js` junto com seus projetos e tecnologias. Estatísticas desconhecidas aparecem como `—`, sem inventar números.
+As chamadas validam HTTP, JSON e formato dos dados, possuem timeout de 12 segundos e são canceladas na desmontagem. Cada recurso mantém os últimos dados disponíveis ou usa dados locais quando falha, sem derrubar a página. Um aviso de conexão permite tentar novamente sem recarregar; ele desaparece quando todos os recursos voltam a responder. Traduções são compartilhadas entre componentes. Atualize `fallback.js` junto com seus projetos e tecnologias. Estatísticas desconhecidas aparecem como `—`, sem inventar números.
 
 Variáveis `VITE_*` entram no JavaScript público durante o build: não coloque senhas ou tokens nelas. A API precisa permitir CORS para o domínio da hospedagem. Fontes Google, ícones de tecnologias e avatar GitHub continuam sendo recursos externos; o conteúdo textual permanece disponível se eles falharem.
 
