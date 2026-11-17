@@ -4,7 +4,7 @@ import "./footer.css";
 const FRASES = [
   "Foco no que ainda não foi compreendido.",
   "A engenharia que resolve problemas.",
-  "Alguem que resolve problemas.",
+  "Alguém que resolve problemas.",
   "Estrategista escalando seu negócio.",
 ];
 
@@ -25,15 +25,15 @@ function Footer() {
       <div className="footer-onda-container">
         {Array.from({ length: qtdOndas }).map((_, i) => (
           <svg className="footer-onda" key={i} width="200" height="124">
-            <use href="/#ondas" />
+            <use href="#ondas" />
           </svg>
         ))}
       </div>
 
       <aside>
-        <span>quantidade de commits - {/* aqui */} </span>
-        <span>quantidade de repositorios - {/* aqui */} </span>
-        <span>Tempo de desenvolvedor - {/* aqui */} </span>
+        <a href="https://github.com/michael-PSTL" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="#projects">Projetos</a>
+        <a href="#timeline">Trajetória</a>
       </aside>
 
       <div className="motivation-text">
@@ -44,9 +44,7 @@ function Footer() {
       </div>
 
       <span>
-        © {new Date().getFullYear()} Michael Silva Soares — todos os direitos reservados ·{" "}
-        <a href="/termos">termos de uso</a> ·{" "}
-        <a href="/privacidade">privacidade</a>
+        © {new Date().getFullYear()} Michael Silva Soares — todos os direitos reservados.
       </span>
     </footer>
   );

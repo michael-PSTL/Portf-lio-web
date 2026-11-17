@@ -1,191 +1,85 @@
-import { useState, useEffect } from "react";
-import "./Projects.css";
-import AnimatedList from "/src/animations/AnimatedList/AnimatedList.jsx";
+import { useCallback, useState } from 'react';
+import './projects.css';
+import AnimatedList from '../../animations/AnimatedList/AnimatedList.jsx';
+import { usePortfolio } from '../../data/usePortfolio.js';
+import { safeUrl } from '../../data/api.js';
 
-function Projects() {
+const PODIUM_CLASSES = ['podio-segundo-lugar', 'podio-primeiro-lugar', 'podio-terceiro-lugar'];
+
+function ProjectLink({ project, className, children }) {
+  const href = safeUrl(project.url, false);
+  return href ? (
+    <a className={className} href={href} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  ) : <div className={className}>{children}</div>;
+}
+
+export default function Projects() {
   const [isListOpen, setIsListOpen] = useState(false);
-  const [projects, setProjects] = useState([]);
-  const [translations, setTranslations] = useState([]);
-
-  useEffect(() => {
-    document.body.style.overflow = isListOpen ? "hidden" : "unset";
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-
-  }, [isListOpen]);
-
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const [projRes, transRes] = await Promise.all([
-          fetch("https://curriculo-api-qirm.onrender.com/project"),
-          fetch("https://curriculo-api-qirm.onrender.com/translations"),
-        ]);
-
-        setProjects(await projRes.json());
-        setTranslations(await transRes.json());
-        
-      } catch (err) {
-        console.error("Erro ao carregar projetos:", err);
-      }
-    }
-
-    loadData();
-  }, []);
-
-  // Tradução
-  const getTitle = (key) =>
-    translations.find((t) => t.contentKey === key)?.pt || key;
-
-  // Formata número (01, 02, ..., 10)
-  const formatNum = (num) => (num < 10 ? `0${num}` : `${num}`);
-
-  const getProjectById = (id) =>
-    projects.find((p) => p.id === id);
-
-  // Define o ícone conforme a URL
-  const getProjectIcon = (url) => {
-    if (!url || url.trim() === "") {
-      return "build";
-    }
-
-    if (url.toLowerCase().includes("github.com")) {
-      return "repo";
-    }
-
-    return "site";
-  };
-
-  // Projetos fora do pódio
-  const otherProjects = projects.filter((p) => p.id > 3 && p.id < 7);
+  const { projects, translations, loading, error } = usePortfolio();
+  const closeList = useCallback(() => setIsListOpen(false), []);
+  const titleFor = (project) => translations.find((entry) => entry.contentKey === project.titleKey)?.pt
+    || project.title || project.name || project.titleKey || 'Projeto';
+  const iconFor = (project) => safeUrl(project.url, false) ? 'repo' : 'build';
+  const featured = projects.slice(0, 3);
+  const others = projects.slice(3, 6);
 
   return (
-    <section id="projects" className="projects">
-      {/* ───────── PÓDIO ───────── */}
+    <section id="projects" className="projects" aria-labelledby="projects-heading" aria-busy={loading}>
       <article className="container-podio">
-        <div className="section-label">
-          <h2>Projetos destacados</h2>
-        </div>
-
-        <div className="podio">
-          {/* #1 */}
-          {getProjectById(1) && (
-            <a
-              href={getProjectById(1).url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="podio-card podio-segundo-lugar"
-            >
-              <div className="medal medal-gold">#1</div>
-
-              <p className="project-name">
-                {getTitle(getProjectById(1).titleKey)}
-              </p>
-            </a>
-          )}
-
-          {/* #2 */}
-          {getProjectById(2) && (
-            <a
-              href={getProjectById(2).url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="podio-card podio-primeiro-lugar"
-            >
-              <div className="medal medal-silver">#2</div>
-
-              <p className="project-name">
-                {getTitle(getProjectById(2).titleKey)}
-              </p>
-            </a>
-          )}
-
-          {/* #3 */}
-          {getProjectById(3) && (
-            <a
-              href={getProjectById(3).url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="podio-card podio-terceiro-lugar"
-            >
-              <div className="medal medal-bronze">#3</div>
-
-              <p className="project-name">
-                {getTitle(getProjectById(3).titleKey)}
-              </p>
-            </a>
-          )}
-        </div>
+        <div className="section-label"><h2 id="projects-heading">Projetos em destaque</h2></div>
+        {loading && projects.length === 0 && <p role="status">Carregando projetos…</p>}
+        {!loading && projects.length === 0 && (
+          <p role="status">{error ? 'Os projetos estão temporariamente indisponíveis.' : 'Novos projetos em breve.'}</p>
+        )}
+        {featured.length > 0 && (
+          <div className="podio">
+            {featured.map((project, index) => (
+              <ProjectLink key={project.id ?? project.titleKey ?? index} project={project} className={`podio-card ${PODIUM_CLASSES[index]}`}>
+                <span className="medal">#{index + 1}</span>
+                <p className="project-name">{titleFor(project)}</p>
+                {!safeUrl(project.url, false) && <span className="project-state">Em desenvolvimento</span>}
+                <span className="card-dots" aria-hidden="true"><span /><span /><span /></span>
+              </ProjectLink>
+            ))}
+          </div>
+        )}
       </article>
-
-      {/* ───────── OUTROS PROJETOS ───────── */}
-      <aside className="projetos">
-        <div className="outros-header">
-          <h2>Outros projetos</h2>
-        </div>
-
-        {otherProjects.map((project) => (
-          <a
-            key={project.id}
-            href={project.url || undefined}
-            className="projeto-item"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="projeto-num">
-              {formatNum(project.id)}
-            </span>
-
+      <aside className="projetos" aria-labelledby="other-projects-heading">
+        <div className="outros-header"><h2 id="other-projects-heading">Outros projetos</h2></div>
+        {others.map((project, index) => (
+          <ProjectLink key={project.id ?? project.titleKey ?? index} project={project} className="projeto-item">
+            <span className="projeto-num">{String(index + 4).padStart(2, '0')}</span>
             <div className="projeto-info">
-              <p className="projeto-titulo">
-                {getTitle(project.titleKey)}
-              </p>
-
-              <p className="projeto-desc">
-                {project.url || "Em desenvolvimento"}
-              </p>
+              <p className="projeto-titulo">{titleFor(project)}</p>
+              <p className="projeto-desc">{safeUrl(project.url, false) || 'Em desenvolvimento'}</p>
             </div>
-
-            <span className="projeto-tag">
-              <svg viewBox="0 0 20 20" width="30" height="30">
-                <use href={`/#${getProjectIcon(project.url)}`} />
-              </svg>
+            <span className="projeto-tag" aria-hidden="true">
+              <svg viewBox="0 0 20 20" width="30" height="30"><use href={`#${iconFor(project)}`} /></svg>
             </span>
-          </a>
+          </ProjectLink>
         ))}
-
-        {/* ───────── BOTÃO VER MAIS ───────── */}
-        <div className="ver-mais-wrap">
-          <button
-            className="ver-mais"
-            onClick={() => setIsListOpen(true)}
-          >
-            Ver mais
-          </button>
-        </div>
-
-        {/* ───────── MODAL COMPLETO ───────── */}
+        {!loading && others.length === 0 && <p>Veja os projetos em destaque.</p>}
+        {projects.length > 0 && (
+          <div className="ver-mais-wrap">
+            <button type="button" className="ver-mais" onClick={() => setIsListOpen(true)} aria-haspopup="dialog">Ver todos os projetos</button>
+          </div>
+        )}
         {isListOpen && (
           <AnimatedList
-            items={projects.map((p) => ({
-              num: formatNum(p.id),
-              title: getTitle(p.titleKey),
-              desc: p.url || "Em desenvolvimento",
-              link: p.url,
-              tag: getProjectIcon(p.url),
+            items={projects.map((project, index) => ({
+              id: project.id ?? project.titleKey ?? index,
+              num: String(index + 1).padStart(2, '0'),
+              title: titleFor(project),
+              desc: safeUrl(project.url, false) || 'Em desenvolvimento',
+              link: safeUrl(project.url, false),
+              tag: iconFor(project),
             }))}
-            onItemSelect={() => setIsListOpen(false)}
-            onClose={() => setIsListOpen(false)}
-            showGradients
-            enableArrowNavigation
-            displayScrollbar
+            onClose={closeList}
           />
         )}
       </aside>
     </section>
   );
 }
-
-export default Projects;

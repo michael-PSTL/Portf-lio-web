@@ -1,66 +1,32 @@
 import { useState, useEffect } from "react";
 import "./hero.css";
-import SocialMidia from "../../components/socialMidia/socialMidia";
+import SocialMidia from "../../components/SocialMidia/SocialMidia.jsx";
+import { usePortfolio } from "../../data/usePortfolio.js";
 
 function Hero() {
   const [time, setTime] = useState(new Date());
-  const [skills, setSkills] = useState([]);
-  const [status, setStatus] = useState([{ projects: 0, experience: 0 }]);
+  const { competencies, translations, heroStatus: status } = usePortfolio();
+  const skills = competencies.slice(0, 4).map((item) => ({
+    key: item.contentKey,
+    label: translations.find((translation) => translation.contentKey === item.contentKey)?.pt || item.contentKey,
+  }));
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    async function loadSkills() {
-      try {
-        const [compRes, transRes, statRes] = await Promise.all([
-          fetch("https://curriculo-api-qirm.onrender.com/competency"),
-          fetch("https://curriculo-api-qirm.onrender.com/translations"),
-          fetch("https://curriculo-api-qirm.onrender.com/api/hero/status"),
-        ]);
-
-        const competencies = await compRes.json();
-        const translations = await transRes.json();
-        const status = await statRes.json();
-
-        setStatus({
-          projects: status.projects || 0,
-          experience: status.experience || 0,
-        });
-
-        // Mapeia e traduz as competências primeiro
-        const activeSkills = competencies
-          .map((item) => {
-            const translation = translations.find(
-              (t) => t.contentKey === item.contentKey,
-            );
-
-            return {
-              key: item.contentKey,
-              label: translation?.pt || item.contentKey,
-            };
-          })
-          .slice(0, 4);
-        setSkills(activeSkills);
-      } catch (err) {
-        console.error("Erro ao carregar competências:", err);
-      }
-    }
-
-    loadSkills();
-  }, []);
-
   const formatTime = (date) => {
-    const h = String(date.getHours()).padStart(2, "0");
-    const m = String(date.getMinutes()).padStart(2, "0");
-    const s = String(date.getSeconds()).padStart(2, "0");
-    return { h, m, s };
+    const parts = new Intl.DateTimeFormat('pt-BR', {
+      timeZone: 'America/Fortaleza', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+    }).formatToParts(date);
+    const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+    return { h: values.hour, m: values.minute, s: values.second };
   };
 
   const formatDate = (date) =>
     date.toLocaleDateString("pt-BR", {
+      timeZone: "America/Fortaleza",
       weekday: "long",
       day: "numeric",
       month: "short",
@@ -113,14 +79,14 @@ function Hero() {
           <p className="hero-eyebrow">Sobre mim</p>
 
           <div className="hero-description">
-            <h3>
+            <h1>
               Criando coisas
               <br />
               <em>com propósito</em>
-            </h3>
+            </h1>
 
             <p>
-              Sou Michael, tenho 18 anos e sou um desenvolvedor full-stack.
+              Sou Michael, sou um desenvolvedor full-stack.
               Gosto de criar projetos criativos e sempre busco aprender novas
               formas de desenvolver minhas habilidades, me mantendo atualizado
               com as últimas tendências em tecnologia. Este portfólio é um
@@ -137,44 +103,18 @@ function Hero() {
         </div>
       </div>
 
-      {/* ── COLUNA 3: Stats + Spotify + Relógio ── */}
+      {/* ── COLUNA 3: Estatísticas + Relógio ── */}
       <aside className="hero-col-right">
 
         <div className="stats-row">
           <div className="stat-card accent-purple">
-            <div className="stat-value big">{status.projects}+</div>
+            <div className="stat-value big">{status.projects ?? "—"}</div>
             <div className="stat-label">Projetos</div>
           </div>
 
           <div className="stat-card accent-blue">
-            <div className="stat-value small">{status.experience}</div>
+            <div className="stat-value small">{status.experience ?? "—"}</div>
             <div className="stat-label">De experiência</div>
-          </div>
-        </div>
-
-        {/* Spotify */}
-        <div className="spotify-widget-container">
-          <div className="spotify-header">
-            <span className="spotify-dot" />
-            <span className="spotify-label">Ouvindo agora</span>
-          </div>
-
-          <div className="spotify-track">
-            <div className="spotify-thumb">🎧</div>
-            <div>
-              <div className="spotify-song">API do Spotify</div>
-              <div className="spotify-artist">Integração pendente</div>
-            </div>
-          </div>
-
-          <div className="spotify-progress">
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: "62%" }} />
-            </div>
-            <div className="progress-times">
-              <span>1:24</span>
-              <span>3:47</span>
-            </div>
           </div>
         </div>
 
